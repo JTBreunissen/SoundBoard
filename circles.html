@@ -145,21 +145,20 @@
 
 		function onKeyDown(event) {
 			var maxPoint = new Point(view.size.width, view.size.height);
+			var randomPoint = Point.random();
+			var point = maxPoint * randomPoint;
+			shapeColor = randomColor();
 			if(keyData[event.key] && toggleShape) {
-				var randomPoint = Point.random();
-				var point = maxPoint * randomPoint;
 				var newCircle = new Path.Circle(point, 500)
-				newCircle.fillColor = randomColor();
+				newCircle.fillColor = shapeColor;
 				keyData[event.key].sound.play();
 				shapes.push(newCircle);
 				toggleShape = !toggleShape;
 			} else {
-				var randomPoint1 = Point.random();
 				var randomPoint2 = Point.random();
-				var point1 = maxPoint * randomPoint1;
 				var point2 = maxPoint * randomPoint2;
-				var newRectangle = new Path.Rectangle(point1, point2);
-				newRectangle.fillColor = randomColor();
+				var newRectangle = new Path.Rectangle(point, point2);
+				newRectangle.fillColor = shapeColor;
 				keyData[event.key].sound.play();
 				shapes.push(newRectangle);
 				toggleShape = !toggleShape;
