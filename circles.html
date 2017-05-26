@@ -140,29 +140,39 @@
 			}
 		}
 
-		var circles = [];
+		var shapes = [];
+		var toggleShape = true;
 
 		function onKeyDown(event) {
-			if(keyData[event.key]){
-				var maxPoint = new Point(view.size.width, view.size.height);
+			var maxPoint = new Point(view.size.width, view.size.height);
+			if(keyData[event.key] && toggleShape) {
 				var randomPoint = Point.random();
 				var point = maxPoint * randomPoint;
 				var newCircle = new Path.Circle(point, 500)
 				newCircle.fillColor = randomColor();
 				keyData[event.key].sound.play();
-				circles.push(newCircle);
-				console.log(randomColor());
+				shapes.push(newCircle);
+				toggleShape = !toggleShape;
+			} else {
+				var randomPoint1 = Point.random();
+				var randomPoint2 = Point.random();
+				var point1 = maxPoint * randomPoint1;
+				var point2 = maxPoint * randomPoint2;
+				var newRectangle = new Path.Rectangle(point1, point2);
+				newRectangle.fillColor = randomColor();
+				keyData[event.key].sound.play();
+				shapes.push(newRectangle);
+				toggleShape = !toggleShape;
 			}
 		}
 
 		function onFrame(event){
-      for(var i = 0; i < circles.length; i++){
-        circles[i].scale(0.9);
-        circles[i].fillColor.hue += 1;
-        if(circles[i].area < 1){
-        	circles[i].remove();
-          circles.splice(i, 1);
-          console.log(circles);
+      for(var i = 0; i < shapes.length; i++){
+        shapes[i].scale(0.9);
+        shapes[i].fillColor.hue += 3;
+        if(shapes[i].area < 1){
+        	shapes[i].remove();
+          shapes.splice(i, 1);
         }
       }
     }
@@ -171,6 +181,7 @@
 			var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
 			return randomColor
 		}
+
 	</script>
 </head>
 <body>
